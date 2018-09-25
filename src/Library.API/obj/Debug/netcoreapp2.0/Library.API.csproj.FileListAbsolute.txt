@@ -1,0 +1,12 @@
+D:\Project\restful-api\src\Library.API\bin\Debug\netcoreapp2.0\nlog.config
+D:\Project\restful-api\src\Library.API\bin\Debug\netcoreapp2.0\Library.API.deps.json
+D:\Project\restful-api\src\Library.API\bin\Debug\netcoreapp2.0\Library.API.runtimeconfig.json
+D:\Project\restful-api\src\Library.API\bin\Debug\netcoreapp2.0\Library.API.runtimeconfig.dev.json
+D:\Project\restful-api\src\Library.API\bin\Debug\netcoreapp2.0\Library.API.dll
+D:\Project\restful-api\src\Library.API\bin\Debug\netcoreapp2.0\Library.API.pdb
+D:\Project\restful-api\src\Library.API\obj\Debug\netcoreapp2.0\Library.API.csprojResolveAssemblyReference.cache
+D:\Project\restful-api\src\Library.API\obj\Debug\netcoreapp2.0\Library.API.csproj.CoreCompileInputs.cache
+D:\Project\restful-api\src\Library.API\obj\Debug\netcoreapp2.0\Library.API.AssemblyInfoInputs.cache
+D:\Project\restful-api\src\Library.API\obj\Debug\netcoreapp2.0\Library.API.AssemblyInfo.cs
+D:\Project\restful-api\src\Library.API\obj\Debug\netcoreapp2.0\Library.API.dll
+D:\Project\restful-api\src\Library.API\obj\Debug\netcoreapp2.0\Library.API.pdb

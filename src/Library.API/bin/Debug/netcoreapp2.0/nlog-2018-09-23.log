@@ -1,0 +1,639 @@
+2018-09-23 11:06:09.8418|INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\sandu\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-09-23 11:06:12.0825|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.0.0-rtm-26452 initialized 'LibraryContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2018-09-23 11:06:26.7387|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (232ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+CREATE DATABASE [LibraryDB];
+2018-09-23 11:06:26.8441|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (73ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5 EXEC(N'ALTER DATABASE [LibraryDB] SET READ_COMMITTED_SNAPSHOT ON;');
+2018-09-23 11:06:26.9110|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (10ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2018-09-23 11:06:26.9471|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (7ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:06:27.0041|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2018-09-23 11:06:27.0458|INFO|Microsoft.EntityFrameworkCore.Migrations|Applying migration '20161007150914_InitialMigration'.
+2018-09-23 11:06:27.1043|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [Authors] (
+    [Id] uniqueidentifier NOT NULL,
+    [DateOfBirth] datetimeoffset NOT NULL,
+    [FirstName] nvarchar(50) NOT NULL,
+    [Genre] nvarchar(50) NOT NULL,
+    [LastName] nvarchar(50) NOT NULL,
+    CONSTRAINT [PK_Authors] PRIMARY KEY ([Id])
+);
+2018-09-23 11:06:27.1043|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [Books] (
+    [Id] uniqueidentifier NOT NULL,
+    [AuthorId] uniqueidentifier NOT NULL,
+    [Description] nvarchar(500) NULL,
+    [Title] nvarchar(100) NOT NULL,
+    CONSTRAINT [PK_Books] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Books_Authors_AuthorId] FOREIGN KEY ([AuthorId]) REFERENCES [Authors] ([Id]) ON DELETE CASCADE
+);
+2018-09-23 11:06:27.1224|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_Books_AuthorId] ON [Books] ([AuthorId]);
+2018-09-23 11:06:27.1323|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20161007150914_InitialMigration', N'2.0.0-rtm-26452');
+2018-09-23 11:06:27.1622|INFO|Microsoft.EntityFrameworkCore.Migrations|Applying migration '20170111165006_AddDateOfDeathToAuthor'.
+2018-09-23 11:06:27.1622|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+ALTER TABLE [Authors] ADD [DateOfDeath] datetimeoffset NULL;
+2018-09-23 11:06:27.1834|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20170111165006_AddDateOfDeathToAuthor', N'2.0.0-rtm-26452');
+2018-09-23 11:06:27.7014|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[DateOfBirth], [a].[DateOfDeath], [a].[FirstName], [a].[Genre], [a].[LastName]
+FROM [Authors] AS [a]
+2018-09-23 11:06:27.8616|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (35ms) [Parameters=[@p0='?', @p1='?', @p2='?', @p3='?' (Size = 50), @p4='?' (Size = 50), @p5='?' (Size = 50), @p6='?', @p7='?', @p8='?', @p9='?' (Size = 50), @p10='?' (Size = 50), @p11='?' (Size = 50), @p12='?', @p13='?', @p14='?', @p15='?' (Size = 50), @p16='?' (Size = 50), @p17='?' (Size = 50), @p18='?', @p19='?', @p20='?', @p21='?' (Size = 50), @p22='?' (Size = 50), @p23='?' (Size = 50), @p24='?', @p25='?', @p26='?', @p27='?' (Size = 50), @p28='?' (Size = 50), @p29='?' (Size = 50), @p30='?', @p31='?', @p32='?', @p33='?' (Size = 50), @p34='?' (Size = 50), @p35='?' (Size = 50)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Authors] ([Id], [DateOfBirth], [DateOfDeath], [FirstName], [Genre], [LastName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5),
+(@p6, @p7, @p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15, @p16, @p17),
+(@p18, @p19, @p20, @p21, @p22, @p23),
+(@p24, @p25, @p26, @p27, @p28, @p29),
+(@p30, @p31, @p32, @p33, @p34, @p35);
+2018-09-23 11:06:27.8832|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (10ms) [Parameters=[@p36='?', @p37='?', @p38='?' (Size = 500), @p39='?' (Size = 100), @p40='?', @p41='?', @p42='?' (Size = 500), @p43='?' (Size = 100), @p44='?', @p45='?', @p46='?' (Size = 500), @p47='?' (Size = 100), @p48='?', @p49='?', @p50='?' (Size = 500), @p51='?' (Size = 100), @p52='?', @p53='?', @p54='?' (Size = 500), @p55='?' (Size = 100), @p56='?', @p57='?', @p58='?' (Size = 500), @p59='?' (Size = 100), @p60='?', @p61='?', @p62='?' (Size = 500), @p63='?' (Size = 100), @p64='?', @p65='?', @p66='?' (Size = 500), @p67='?' (Size = 100), @p68='?', @p69='?', @p70='?' (Size = 500), @p71='?' (Size = 100), @p72='?', @p73='?', @p74='?' (Size = 500), @p75='?' (Size = 100), @p76='?', @p77='?', @p78='?' (Size = 500), @p79='?' (Size = 100)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Books] ([Id], [AuthorId], [Description], [Title])
+VALUES (@p36, @p37, @p38, @p39),
+(@p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47),
+(@p48, @p49, @p50, @p51),
+(@p52, @p53, @p54, @p55),
+(@p56, @p57, @p58, @p59),
+(@p60, @p61, @p62, @p63),
+(@p64, @p65, @p66, @p67),
+(@p68, @p69, @p70, @p71),
+(@p72, @p73, @p74, @p75),
+(@p76, @p77, @p78, @p79);
+2018-09-23 11:06:28.7125|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/  
+2018-09-23 11:06:28.9048|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 11:06:28.9153|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - no If-None-Match or If-Modified-Since headers.
+2018-09-23 11:06:28.9153|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 11:06:28.9556|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 11:06:28.9722|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 11:06:28.9831|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 11:06:29.3239|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 11:06:29.3239|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 15:16:29 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 11:06:29.3626|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 11:06:29.3835|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: CC46BE2405E03E2DEB2130D4DE57E775. Last-Modified: Sun, 23 Sep 2018 15:06:29 GMT
+2018-09-23 11:06:29.3835|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 11:06:29.4027|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 11:06:29.4718|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 784.5142ms 404 
+2018-09-23 11:06:44.3208|INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\sandu\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-09-23 11:06:45.0253|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.0.0-rtm-26452 initialized 'LibraryContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2018-09-23 11:06:46.7407|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (13ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:06:46.7723|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:06:46.8160|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2018-09-23 11:06:46.8630|INFO|Microsoft.EntityFrameworkCore.Migrations|No migrations were applied. The database is already up to date.
+2018-09-23 11:06:47.5510|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[DateOfBirth], [a].[DateOfDeath], [a].[FirstName], [a].[Genre], [a].[LastName]
+FROM [Authors] AS [a]
+2018-09-23 11:06:47.7449|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (60ms) [Parameters=[@p0='?', @p1='?', @p2='?', @p3='?', @p4='?', @p5='?'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Authors]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT;
+
+DELETE FROM [Authors]
+WHERE [Id] = @p1;
+SELECT @@ROWCOUNT;
+
+DELETE FROM [Authors]
+WHERE [Id] = @p2;
+SELECT @@ROWCOUNT;
+
+DELETE FROM [Authors]
+WHERE [Id] = @p3;
+SELECT @@ROWCOUNT;
+
+DELETE FROM [Authors]
+WHERE [Id] = @p4;
+SELECT @@ROWCOUNT;
+
+DELETE FROM [Authors]
+WHERE [Id] = @p5;
+SELECT @@ROWCOUNT;
+2018-09-23 11:06:47.8303|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (5ms) [Parameters=[@p0='?', @p1='?', @p2='?', @p3='?' (Size = 50), @p4='?' (Size = 50), @p5='?' (Size = 50), @p6='?', @p7='?', @p8='?', @p9='?' (Size = 50), @p10='?' (Size = 50), @p11='?' (Size = 50), @p12='?', @p13='?', @p14='?', @p15='?' (Size = 50), @p16='?' (Size = 50), @p17='?' (Size = 50), @p18='?', @p19='?', @p20='?', @p21='?' (Size = 50), @p22='?' (Size = 50), @p23='?' (Size = 50), @p24='?', @p25='?', @p26='?', @p27='?' (Size = 50), @p28='?' (Size = 50), @p29='?' (Size = 50), @p30='?', @p31='?', @p32='?', @p33='?' (Size = 50), @p34='?' (Size = 50), @p35='?' (Size = 50)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Authors] ([Id], [DateOfBirth], [DateOfDeath], [FirstName], [Genre], [LastName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5),
+(@p6, @p7, @p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15, @p16, @p17),
+(@p18, @p19, @p20, @p21, @p22, @p23),
+(@p24, @p25, @p26, @p27, @p28, @p29),
+(@p30, @p31, @p32, @p33, @p34, @p35);
+2018-09-23 11:06:47.8503|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (7ms) [Parameters=[@p36='?', @p37='?', @p38='?' (Size = 500), @p39='?' (Size = 100), @p40='?', @p41='?', @p42='?' (Size = 500), @p43='?' (Size = 100), @p44='?', @p45='?', @p46='?' (Size = 500), @p47='?' (Size = 100), @p48='?', @p49='?', @p50='?' (Size = 500), @p51='?' (Size = 100), @p52='?', @p53='?', @p54='?' (Size = 500), @p55='?' (Size = 100), @p56='?', @p57='?', @p58='?' (Size = 500), @p59='?' (Size = 100), @p60='?', @p61='?', @p62='?' (Size = 500), @p63='?' (Size = 100), @p64='?', @p65='?', @p66='?' (Size = 500), @p67='?' (Size = 100), @p68='?', @p69='?', @p70='?' (Size = 500), @p71='?' (Size = 100), @p72='?', @p73='?', @p74='?' (Size = 500), @p75='?' (Size = 100), @p76='?', @p77='?', @p78='?' (Size = 500), @p79='?' (Size = 100)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Books] ([Id], [AuthorId], [Description], [Title])
+VALUES (@p36, @p37, @p38, @p39),
+(@p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47),
+(@p48, @p49, @p50, @p51),
+(@p52, @p53, @p54, @p55),
+(@p56, @p57, @p58, @p59),
+(@p60, @p61, @p62, @p63),
+(@p64, @p65, @p66, @p67),
+(@p68, @p69, @p70, @p71),
+(@p72, @p73, @p74, @p75),
+(@p76, @p77, @p78, @p79);
+2018-09-23 11:06:53.8565|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/api/authors/getauthor  
+2018-09-23 11:06:53.9908|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 11:06:54.0187|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - no If-None-Match or If-Modified-Since headers.
+2018-09-23 11:06:54.0536|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 11:06:54.0916|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 11:06:54.1177|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 11:06:54.1450|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 11:06:54.4321|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.0.0-rtm-26452 initialized 'LibraryContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2018-09-23 11:06:54.4464|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:06:54.4464|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:06:54.4719|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2018-09-23 11:06:54.5009|INFO|Microsoft.EntityFrameworkCore.Migrations|No migrations were applied. The database is already up to date.
+2018-09-23 11:06:54.5945|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method Library.API.Controllers.AuthorsController.GetAuthor (Library.API) with arguments (00000000-0000-0000-0000-000000000000, ) - ModelState is Invalid
+2018-09-23 11:06:54.6587|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[@__authorId_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateOfBirth], [a].[DateOfDeath], [a].[FirstName], [a].[Genre], [a].[LastName]
+FROM [Authors] AS [a]
+WHERE [a].[Id] = @__authorId_0
+2018-09-23 11:06:54.6908|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 404
+2018-09-23 11:06:54.7241|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action Library.API.Controllers.AuthorsController.GetAuthor (Library.API) in 288.1187ms
+2018-09-23 11:06:54.7422|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 11:06:54.7422|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 15:16:54 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 11:06:54.7848|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 11:06:54.8002|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: 285F5960020B5D2D7F098A6BFE67A7DC. Last-Modified: Sun, 23 Sep 2018 15:06:54 GMT
+2018-09-23 11:06:54.8082|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 11:06:54.8082|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 11:06:54.8553|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 1004.0284ms 404 
+2018-09-23 11:07:14.5489|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/api/authors/  
+2018-09-23 11:07:14.5633|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 11:07:14.5863|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - no If-None-Match or If-Modified-Since headers.
+2018-09-23 11:07:14.6033|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 11:07:14.6551|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 11:07:14.6658|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 11:07:14.6658|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 11:07:14.7018|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.0.0-rtm-26452 initialized 'LibraryContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2018-09-23 11:07:14.7099|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:07:14.7411|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:07:14.7411|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2018-09-23 11:07:14.7627|INFO|Microsoft.EntityFrameworkCore.Migrations|No migrations were applied. The database is already up to date.
+2018-09-23 11:07:14.8043|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method Library.API.Controllers.AuthorsController.GetAuthors (Library.API) with arguments (Library.API.Helpers.AuthorsResourceParameters, text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8) - ModelState is Valid
+2018-09-23 11:07:15.0302|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Authors] AS [a]
+2018-09-23 11:07:15.0622|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[@__p_0='?', @__p_1='?'], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[DateOfBirth], [a].[DateOfDeath], [a].[FirstName], [a].[Genre], [a].[LastName]
+FROM [Authors] AS [a]
+ORDER BY [a].[FirstName], [a].[LastName]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2018-09-23 11:07:15.2819|INFO|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+2018-09-23 11:07:15.3693|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action Library.API.Controllers.AuthorsController.GetAuthors (Library.API) in 665.9813ms
+2018-09-23 11:07:15.3693|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 11:07:15.3863|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 15:17:15 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 11:07:15.3863|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 11:07:15.4041|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: D007D5F16B70D0074633ACF5C9FD280F. Last-Modified: Sun, 23 Sep 2018 15:07:15 GMT
+2018-09-23 11:07:15.4137|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 11:07:15.4137|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 11:07:15.4390|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 891.864ms 200 application/json; charset=utf-8
+2018-09-23 11:07:15.5370|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/favicon.ico  
+2018-09-23 11:07:15.5537|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 11:07:15.5537|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - no If-None-Match or If-Modified-Since headers.
+2018-09-23 11:07:15.5778|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 11:07:15.5778|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 11:07:15.6060|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 11:07:15.6194|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 11:07:15.6475|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 11:07:15.6614|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 15:17:15 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 11:07:15.6831|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 11:07:15.7095|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: 77BD6F1ED0F242A8632E4A143197DB64. Last-Modified: Sun, 23 Sep 2018 15:07:15 GMT
+2018-09-23 11:07:15.7095|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 11:07:15.7344|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 11:07:15.7512|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 208.8957ms 404 
+2018-09-23 11:07:41.5548|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/api/GetRoot  
+2018-09-23 11:07:41.5856|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 11:07:41.5856|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - no If-None-Match or If-Modified-Since headers.
+2018-09-23 11:07:41.6307|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 11:07:41.6307|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 11:07:41.6481|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 11:07:41.6481|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 11:07:41.6682|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 11:07:41.6962|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 15:17:41 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 11:07:41.7237|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 11:07:41.7515|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: AC5F1DBC93E6ADAABB879DC692EDDC4D. Last-Modified: Sun, 23 Sep 2018 15:07:41 GMT
+2018-09-23 11:07:41.7587|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 11:07:41.7886|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 11:07:41.8030|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 242.3994ms 404 
+2018-09-23 11:45:29.1127|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/api/authors/f74d6899-9ed2-4137-9876-66b070553f8f  
+2018-09-23 11:45:29.1365|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 11:45:29.1567|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - no If-None-Match or If-Modified-Since headers.
+2018-09-23 11:45:29.1685|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 11:45:29.2047|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 11:45:29.2188|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 11:45:29.2546|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 11:45:29.2743|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.0.0-rtm-26452 initialized 'LibraryContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2018-09-23 11:45:30.8436|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (8ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:45:30.8550|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:45:30.8697|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2018-09-23 11:45:30.8832|INFO|Microsoft.EntityFrameworkCore.Migrations|No migrations were applied. The database is already up to date.
+2018-09-23 11:45:30.8832|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method Library.API.Controllers.AuthorsController.GetAuthor (Library.API) with arguments (f74d6899-9ed2-4137-9876-66b070553f8f, ) - ModelState is Valid
+2018-09-23 11:45:30.9168|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (3ms) [Parameters=[@__authorId_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateOfBirth], [a].[DateOfDeath], [a].[FirstName], [a].[Genre], [a].[LastName]
+FROM [Authors] AS [a]
+WHERE [a].[Id] = @__authorId_0
+2018-09-23 11:45:30.9901|INFO|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+2018-09-23 11:45:31.0208|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action Library.API.Controllers.AuthorsController.GetAuthor (Library.API) in 1745.3932ms
+2018-09-23 11:45:31.0368|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 11:45:31.0513|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 15:55:31 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 11:45:31.0655|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 11:45:31.0770|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: 2F9DEF70F12BBF4C1240810190B37D8A. Last-Modified: Sun, 23 Sep 2018 15:45:31 GMT
+2018-09-23 11:45:31.0882|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 11:45:31.1197|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 11:45:31.1553|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 2019.0798ms 200 application/json; charset=utf-8
+2018-09-23 11:45:50.1411|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/api/authors/f74d6899-9ed2-4137-9876-66b070553f8f  
+2018-09-23 11:45:50.1530|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 11:45:50.1752|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - no If-None-Match or If-Modified-Since headers.
+2018-09-23 11:45:50.1863|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 11:45:50.2155|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 11:45:50.2263|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 11:45:50.2684|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 11:45:50.2808|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.0.0-rtm-26452 initialized 'LibraryContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2018-09-23 11:45:50.3118|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:45:50.3410|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:45:50.3514|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2018-09-23 11:45:50.3847|INFO|Microsoft.EntityFrameworkCore.Migrations|No migrations were applied. The database is already up to date.
+2018-09-23 11:45:50.3847|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method Library.API.Controllers.AuthorsController.GetAuthor (Library.API) with arguments (f74d6899-9ed2-4137-9876-66b070553f8f, ) - ModelState is Valid
+2018-09-23 11:45:50.4028|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[@__authorId_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateOfBirth], [a].[DateOfDeath], [a].[FirstName], [a].[Genre], [a].[LastName]
+FROM [Authors] AS [a]
+WHERE [a].[Id] = @__authorId_0
+2018-09-23 11:45:50.4391|INFO|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+2018-09-23 11:45:50.4528|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action Library.API.Controllers.AuthorsController.GetAuthor (Library.API) in 167.4713ms
+2018-09-23 11:45:50.4718|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 11:45:50.4944|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 15:55:50 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 11:45:50.5062|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 11:45:50.5062|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: B6892BBB8B77D6F9281100C7D636F3A1. Last-Modified: Sun, 23 Sep 2018 15:45:50 GMT
+2018-09-23 11:45:50.5317|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 11:45:50.5412|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 11:45:50.6232|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 413.0327ms 200 application/json; charset=utf-8
+2018-09-23 11:45:51.3683|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/favicon.ico  
+2018-09-23 11:45:51.4077|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 11:45:51.4323|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - no If-None-Match or If-Modified-Since headers.
+2018-09-23 11:45:51.4323|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 11:45:51.4540|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 11:45:51.4652|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 11:45:51.4652|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 11:45:51.5139|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 11:45:51.5139|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 15:55:51 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 11:45:51.5360|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 11:45:51.5466|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: AC68E2629FCD6ECD1DB8B4E4FAC8CD3D. Last-Modified: Sun, 23 Sep 2018 15:45:51 GMT
+2018-09-23 11:45:51.5571|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 11:45:51.5865|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 11:45:51.5865|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 232.6892ms 404 
+2018-09-23 11:46:26.4910|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/api/authors/f74d6899-9ed2-4137-9876-66b070553f8f  
+2018-09-23 11:46:26.5287|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 11:46:26.5505|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking If-None-Match.
+2018-09-23 11:46:26.5697|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking If-None-Match: B6892BBB8B77D6F9281100C7D636F3A1.
+2018-09-23 11:46:26.6119|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|ETag valid: B6892BBB8B77D6F9281100C7D636F3A1.
+2018-09-23 11:46:26.6252|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking If-Modified-Since: Sun, 23 Sep 2018 15:45:50 GMT
+2018-09-23 11:46:26.6578|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 11:46:26.6696|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 11:46:26.6827|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 11:46:26.7147|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 11:46:26.7485|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.0.0-rtm-26452 initialized 'LibraryContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2018-09-23 11:46:26.7787|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:46:26.7908|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:46:26.8089|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2018-09-23 11:46:26.8263|INFO|Microsoft.EntityFrameworkCore.Migrations|No migrations were applied. The database is already up to date.
+2018-09-23 11:46:26.8409|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method Library.API.Controllers.AuthorsController.GetAuthor (Library.API) with arguments (f74d6899-9ed2-4137-9876-66b070553f8f, ) - ModelState is Valid
+2018-09-23 11:46:26.8618|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[@__authorId_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateOfBirth], [a].[DateOfDeath], [a].[FirstName], [a].[Genre], [a].[LastName]
+FROM [Authors] AS [a]
+WHERE [a].[Id] = @__authorId_0
+2018-09-23 11:46:26.8818|INFO|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+2018-09-23 11:46:26.8818|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action Library.API.Controllers.AuthorsController.GetAuthor (Library.API) in 168.7273ms
+2018-09-23 11:46:26.9078|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 11:46:26.9182|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 15:56:26 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 11:46:26.9305|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 11:46:26.9596|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: B6892BBB8B77D6F9281100C7D636F3A1. Last-Modified: Sun, 23 Sep 2018 15:46:26 GMT
+2018-09-23 11:46:26.9911|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 11:46:27.0213|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 11:46:27.0213|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 547.3098ms 200 application/json; charset=utf-8
+2018-09-23 11:46:44.4565|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/api/authors/  
+2018-09-23 11:46:44.4754|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 11:46:44.5206|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - no If-None-Match or If-Modified-Since headers.
+2018-09-23 11:46:44.5424|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 11:46:44.5564|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 11:46:44.5564|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 11:46:44.5779|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 11:46:44.6098|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.0.0-rtm-26452 initialized 'LibraryContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2018-09-23 11:46:44.6375|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:46:44.6703|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:46:44.6818|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2018-09-23 11:46:44.6818|INFO|Microsoft.EntityFrameworkCore.Migrations|No migrations were applied. The database is already up to date.
+2018-09-23 11:46:44.7046|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method Library.API.Controllers.AuthorsController.GetAuthors (Library.API) with arguments (Library.API.Helpers.AuthorsResourceParameters, text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8) - ModelState is Valid
+2018-09-23 11:46:44.7453|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Authors] AS [a]
+2018-09-23 11:46:44.7778|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[@__p_0='?', @__p_1='?'], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[DateOfBirth], [a].[DateOfDeath], [a].[FirstName], [a].[Genre], [a].[LastName]
+FROM [Authors] AS [a]
+ORDER BY [a].[FirstName], [a].[LastName]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2018-09-23 11:46:44.8126|INFO|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+2018-09-23 11:46:44.8491|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action Library.API.Controllers.AuthorsController.GetAuthors (Library.API) in 237.7918ms
+2018-09-23 11:46:44.8643|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 11:46:44.8774|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 15:56:44 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 11:46:44.8914|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 11:46:44.9033|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: 3D821907CFB453103927A83AB79CA527. Last-Modified: Sun, 23 Sep 2018 15:46:44 GMT
+2018-09-23 11:46:44.9142|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 11:46:44.9382|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 11:46:45.0632|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 499.7258ms 200 application/json; charset=utf-8
+2018-09-23 11:50:30.8251|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/api/authors/f74d6899-9ed2-4137-9876-66b070553f8f/books  
+2018-09-23 11:50:30.8398|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 11:50:30.8607|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - no If-None-Match or If-Modified-Since headers.
+2018-09-23 11:50:30.8801|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 11:50:30.8908|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 11:50:30.9226|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 11:50:30.9323|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 11:50:30.9508|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.0.0-rtm-26452 initialized 'LibraryContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2018-09-23 11:50:30.9847|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:50:31.0007|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:50:31.0143|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2018-09-23 11:50:31.0274|INFO|Microsoft.EntityFrameworkCore.Migrations|No migrations were applied. The database is already up to date.
+2018-09-23 11:50:31.0590|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method Library.API.Controllers.BooksController.GetBooksForAuthor (Library.API) with arguments (f74d6899-9ed2-4137-9876-66b070553f8f) - ModelState is Valid
+2018-09-23 11:50:31.1321|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[@__authorId_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Authors] AS [a]
+        WHERE [a].[Id] = @__authorId_0)
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+2018-09-23 11:50:31.1779|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (6ms) [Parameters=[@__authorId_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [b].[Id], [b].[AuthorId], [b].[Description], [b].[Title]
+FROM [Books] AS [b]
+WHERE [b].[AuthorId] = @__authorId_0
+ORDER BY [b].[Title]
+2018-09-23 11:50:31.2387|INFO|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+2018-09-23 11:50:31.2735|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action Library.API.Controllers.BooksController.GetBooksForAuthor (Library.API) in 322.9481ms
+2018-09-23 11:50:31.2735|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 11:50:31.2973|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 16:00:31 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 11:50:31.3089|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 11:50:31.3191|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: 81E977A1D58DE79086B821E925DB0C1E. Last-Modified: Sun, 23 Sep 2018 15:50:31 GMT
+2018-09-23 11:50:31.3191|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 11:50:31.3593|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 11:50:31.4619|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 549.633ms 200 application/json; charset=utf-8
+2018-09-23 11:50:56.4291|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/api/authors/f74d6899-9ed2-4137-9876-66b070553f8f/books/e57b605f-8b3c-4089-b672-6ce9e6d6c23f  
+2018-09-23 11:50:56.4291|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 11:50:56.4557|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - no If-None-Match or If-Modified-Since headers.
+2018-09-23 11:50:56.4722|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 11:50:56.4808|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 11:50:56.5142|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 11:50:56.5243|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 11:50:56.5436|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.0.0-rtm-26452 initialized 'LibraryContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2018-09-23 11:50:56.5593|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:50:56.5715|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:50:56.5715|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2018-09-23 11:50:56.6155|INFO|Microsoft.EntityFrameworkCore.Migrations|No migrations were applied. The database is already up to date.
+2018-09-23 11:50:56.6270|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method Library.API.Controllers.BooksController.GetBookForAuthor (Library.API) with arguments (f74d6899-9ed2-4137-9876-66b070553f8f, e57b605f-8b3c-4089-b672-6ce9e6d6c23f) - ModelState is Valid
+2018-09-23 11:50:56.6408|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[@__authorId_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Authors] AS [a]
+        WHERE [a].[Id] = @__authorId_0)
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+2018-09-23 11:50:56.6876|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[@__authorId_0='?', @__bookId_1='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[AuthorId], [b].[Description], [b].[Title]
+FROM [Books] AS [b]
+WHERE ([b].[AuthorId] = @__authorId_0) AND ([b].[Id] = @__bookId_1)
+2018-09-23 11:50:56.7052|INFO|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+2018-09-23 11:50:56.7128|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action Library.API.Controllers.BooksController.GetBookForAuthor (Library.API) in 173.5365ms
+2018-09-23 11:50:56.7128|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 11:50:56.7323|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 16:00:56 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 11:50:56.7443|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 11:50:56.7443|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: 8A113596F44A70F0B52D2BBD2E764736. Last-Modified: Sun, 23 Sep 2018 15:50:56 GMT
+2018-09-23 11:50:56.7640|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 11:50:56.7738|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 11:50:56.8213|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 363.3698ms 200 application/json; charset=utf-8
+2018-09-23 11:54:30.1110|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/api/authors/f74d6899-9ed2-4137-9876-66b070553f8f/books/e57b605f-8b3c-4089-b672-6ce9e6d6c23f?fields=Id  
+2018-09-23 11:54:30.1242|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 11:54:30.1486|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - no If-None-Match or If-Modified-Since headers.
+2018-09-23 11:54:30.1753|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 11:54:30.1846|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 11:54:30.1990|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 11:54:30.2092|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 11:54:30.2092|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.0.0-rtm-26452 initialized 'LibraryContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2018-09-23 11:54:30.2515|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:54:30.2922|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:54:30.3163|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2018-09-23 11:54:30.3583|INFO|Microsoft.EntityFrameworkCore.Migrations|No migrations were applied. The database is already up to date.
+2018-09-23 11:54:30.3755|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method Library.API.Controllers.BooksController.GetBookForAuthor (Library.API) with arguments (f74d6899-9ed2-4137-9876-66b070553f8f, e57b605f-8b3c-4089-b672-6ce9e6d6c23f) - ModelState is Valid
+2018-09-23 11:54:30.4106|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[@__authorId_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Authors] AS [a]
+        WHERE [a].[Id] = @__authorId_0)
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+2018-09-23 11:54:30.4425|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[@__authorId_0='?', @__bookId_1='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[AuthorId], [b].[Description], [b].[Title]
+FROM [Books] AS [b]
+WHERE ([b].[AuthorId] = @__authorId_0) AND ([b].[Id] = @__bookId_1)
+2018-09-23 11:54:30.4559|INFO|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+2018-09-23 11:54:30.4668|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action Library.API.Controllers.BooksController.GetBookForAuthor (Library.API) in 245.7031ms
+2018-09-23 11:54:30.4776|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 11:54:30.4776|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 16:04:30 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 11:54:30.5142|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 11:54:30.5445|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: 8A113596F44A70F0B52D2BBD2E764736. Last-Modified: Sun, 23 Sep 2018 15:54:30 GMT
+2018-09-23 11:54:30.5540|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 11:54:30.5899|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 11:54:30.6723|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 492.5008ms 200 application/json; charset=utf-8
+2018-09-23 11:54:39.0998|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/api/authors/f74d6899-9ed2-4137-9876-66b070553f8f/books/e57b605f-8b3c-4089-b672-6ce9e6d6c23f?fields=id  
+2018-09-23 11:54:39.0998|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 11:54:39.1405|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - no If-None-Match or If-Modified-Since headers.
+2018-09-23 11:54:39.1559|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 11:54:39.1684|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 11:54:39.1822|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 11:54:39.1954|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 11:54:39.2260|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.0.0-rtm-26452 initialized 'LibraryContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2018-09-23 11:54:39.2407|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:54:39.2407|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:54:39.2891|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2018-09-23 11:54:39.3192|INFO|Microsoft.EntityFrameworkCore.Migrations|No migrations were applied. The database is already up to date.
+2018-09-23 11:54:39.3286|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method Library.API.Controllers.BooksController.GetBookForAuthor (Library.API) with arguments (f74d6899-9ed2-4137-9876-66b070553f8f, e57b605f-8b3c-4089-b672-6ce9e6d6c23f) - ModelState is Valid
+2018-09-23 11:54:39.3411|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[@__authorId_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Authors] AS [a]
+        WHERE [a].[Id] = @__authorId_0)
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+2018-09-23 11:54:39.3766|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[@__authorId_0='?', @__bookId_1='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[AuthorId], [b].[Description], [b].[Title]
+FROM [Books] AS [b]
+WHERE ([b].[AuthorId] = @__authorId_0) AND ([b].[Id] = @__bookId_1)
+2018-09-23 11:54:39.3914|INFO|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+2018-09-23 11:54:39.4092|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action Library.API.Controllers.BooksController.GetBookForAuthor (Library.API) in 199.3467ms
+2018-09-23 11:54:39.4220|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 11:54:39.4338|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 16:04:39 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 11:54:39.4650|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 11:54:39.4775|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: 8A113596F44A70F0B52D2BBD2E764736. Last-Modified: Sun, 23 Sep 2018 15:54:39 GMT
+2018-09-23 11:54:39.4775|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 11:54:39.5201|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 11:54:39.5544|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 436.7462ms 200 application/json; charset=utf-8
+2018-09-23 11:59:44.3303|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/api/authors/f74d6899-9ed2-4137-9876-66b070553f8f/  
+2018-09-23 11:59:44.3498|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 11:59:44.3739|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - no If-None-Match or If-Modified-Since headers.
+2018-09-23 11:59:44.3857|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 11:59:44.4164|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 11:59:44.4380|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 11:59:44.4664|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 11:59:44.5001|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.0.0-rtm-26452 initialized 'LibraryContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2018-09-23 11:59:44.5149|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:59:44.5294|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 11:59:44.5614|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2018-09-23 11:59:44.5739|INFO|Microsoft.EntityFrameworkCore.Migrations|No migrations were applied. The database is already up to date.
+2018-09-23 11:59:44.6064|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method Library.API.Controllers.AuthorsController.GetAuthor (Library.API) with arguments (f74d6899-9ed2-4137-9876-66b070553f8f, ) - ModelState is Valid
+2018-09-23 11:59:44.6400|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[@__authorId_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateOfBirth], [a].[DateOfDeath], [a].[FirstName], [a].[Genre], [a].[LastName]
+FROM [Authors] AS [a]
+WHERE [a].[Id] = @__authorId_0
+2018-09-23 11:59:44.6513|INFO|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+2018-09-23 11:59:44.6631|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action Library.API.Controllers.AuthorsController.GetAuthor (Library.API) in 185.0188ms
+2018-09-23 11:59:44.6631|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 11:59:44.6896|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 16:09:44 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 11:59:44.7013|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 11:59:44.7190|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: 0EB9D9542BB65A7BEE9135178B881AAE. Last-Modified: Sun, 23 Sep 2018 15:59:44 GMT
+2018-09-23 11:59:44.7387|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 11:59:44.7623|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 11:59:44.8420|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 448.4355ms 200 application/json; charset=utf-8
+2018-09-23 12:01:43.8999|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/api/authors/f74d6899-9ed2-4137-9876-66b070553f8f?fields=id,name  
+2018-09-23 12:01:43.9292|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 12:01:43.9684|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - no If-None-Match or If-Modified-Since headers.
+2018-09-23 12:01:44.0006|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 12:01:44.0254|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 12:01:44.0383|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 12:01:44.0688|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 12:01:44.0895|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.0.0-rtm-26452 initialized 'LibraryContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2018-09-23 12:01:44.1026|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 12:01:44.1026|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 12:01:44.1275|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2018-09-23 12:01:44.1610|INFO|Microsoft.EntityFrameworkCore.Migrations|No migrations were applied. The database is already up to date.
+2018-09-23 12:01:44.1967|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method Library.API.Controllers.AuthorsController.GetAuthor (Library.API) with arguments (f74d6899-9ed2-4137-9876-66b070553f8f, id,name) - ModelState is Valid
+2018-09-23 12:01:44.1967|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[@__authorId_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateOfBirth], [a].[DateOfDeath], [a].[FirstName], [a].[Genre], [a].[LastName]
+FROM [Authors] AS [a]
+WHERE [a].[Id] = @__authorId_0
+2018-09-23 12:01:44.2276|INFO|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+2018-09-23 12:01:44.2276|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action Library.API.Controllers.AuthorsController.GetAuthor (Library.API) in 155.0078ms
+2018-09-23 12:01:44.2548|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 12:01:44.2665|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 16:11:44 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 12:01:44.2824|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 12:01:44.2957|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: E9FB6BCB61628D60AA7F43D88B566D95. Last-Modified: Sun, 23 Sep 2018 16:01:44 GMT
+2018-09-23 12:01:44.3209|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 12:01:44.3443|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 12:01:44.3634|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 477.8064ms 200 application/json; charset=utf-8
+2018-09-23 12:01:55.9105|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:6058/api/authors/f74d6899-9ed2-4137-9876-66b070553f8f?fields=id,name  
+2018-09-23 12:01:55.9305|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional GET/HEAD.
+2018-09-23 12:01:55.9469|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - no If-None-Match or If-Modified-Since headers.
+2018-09-23 12:01:55.9788|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 304 - Not Modified.  Continue.
+2018-09-23 12:01:55.9916|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Checking for conditional PUT/PATCH.
+2018-09-23 12:01:55.9916|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Not valid - method isn't PUT or PATCH.
+2018-09-23 12:01:56.0332|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Don't generate 412 - Precondition Failed.  Continue.
+2018-09-23 12:01:56.0496|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.0.0-rtm-26452 initialized 'LibraryContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2018-09-23 12:01:56.0972|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 12:01:56.1446|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2018-09-23 12:01:56.1597|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2018-09-23 12:01:56.1728|INFO|Microsoft.EntityFrameworkCore.Migrations|No migrations were applied. The database is already up to date.
+2018-09-23 12:01:56.2217|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method Library.API.Controllers.AuthorsController.GetAuthor (Library.API) with arguments (f74d6899-9ed2-4137-9876-66b070553f8f, id,name) - ModelState is Valid
+2018-09-23 12:01:56.2522|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[@__authorId_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateOfBirth], [a].[DateOfDeath], [a].[FirstName], [a].[Genre], [a].[LastName]
+FROM [Authors] AS [a]
+WHERE [a].[Id] = @__authorId_0
+2018-09-23 12:01:56.2679|INFO|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+2018-09-23 12:01:56.2862|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action Library.API.Controllers.AuthorsController.GetAuthor (Library.API) in 233.8483ms
+2018-09-23 12:01:56.2984|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating expiration headers.
+2018-09-23 12:01:56.3110|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Expiration headers generated. Expires: Sun, 23 Sep 2018 16:11:56 GMT.  Cache-Control: public,max-age=600,must-revalidate.
+2018-09-23 12:01:56.3334|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Validation headers.
+2018-09-23 12:01:56.4095|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Validation headers generated. ETag: BE59997800EBBE4237490E759FD95A8A. Last-Modified: Sun, 23 Sep 2018 16:01:56 GMT
+2018-09-23 12:01:56.4297|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Generating Vary header.
+2018-09-23 12:01:56.4444|INFO|Marvin.Cache.Headers.HttpCacheHeadersMiddleware|Vary header generated: Accept, Accept-Language, Accept-Encoding.
+2018-09-23 12:01:56.5102|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 556.217ms 200 application/json; charset=utf-8
